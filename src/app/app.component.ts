@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'stepper-assignment';
+
+  steps: {label: string}[] = [
+    { label: 'Role'},
+    { label: 'Email'},
+    { label: 'Settings'}
+  ];
 }

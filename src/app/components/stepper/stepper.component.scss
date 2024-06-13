@@ -1,0 +1,118 @@
+@import '../../../styles/variables';
+
+.stepper-container {
+    .steps {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        transition: all 3s ease-in;
+        counter-reset: step;
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: $dark-gray;
+            position: relative;
+            flex-grow: 1;
+            cursor: pointer;
+
+            &::before {
+                content: counter(step);
+                counter-increment: step;
+                border-radius: 50%;
+                height: 20px;
+                width: 20px;
+                font-size: 10px;
+                color: $text-light-gray;
+                font-weight: 400;
+                line-height: 20px;
+                border: 1px solid;
+                border-color: $bg-gray;
+                background-color: $bg-step;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                bottom: -8px;
+            }
+
+            &::after {
+                content: "";
+                width: 100%;
+                height: 4px;
+                z-index: -1;
+                background-color: $bg-step;
+            }
+
+            &.active {
+                color: $white;
+
+                &::before {
+                    color: $text-black;
+                    background-color: $emerald;
+                    border-color: transparent;
+                }
+
+                &::after {
+                    background-color: $emerald;
+                }
+            }
+
+            &.finished {
+                &::before {
+                    content: "";
+                    background-image: url('../../../assets/images/check-icon.svg');
+                    background-position: center;
+                    border-color: transparent;
+                    box-shadow: 8px 0px 20px rgba(8, 8, 8, 0.45);
+                }
+            }
+
+            .step-label {
+                margin-bottom: 20px;
+                line-height: 22px;
+            }
+        }
+    }
+
+    .step-content {
+        padding: 1.5rem;
+        color: $white;
+        animation: slide-in 600ms ease-in-out;
+    }
+
+    .step-actions {
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
+        justify-content: flex-end;
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: rgba($emerald, 0.6);
+            transition: all 0.5s;
+            cursor: pointer;
+            border: 0;
+            border-radius: 4px;
+            color: $white;
+
+            &:hover {
+                background-color: rgba($emerald, 0.8);
+            }
+
+            &:disabled {
+                background-color: rgba($dark-gray, 0.6);
+            }
+        }
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
