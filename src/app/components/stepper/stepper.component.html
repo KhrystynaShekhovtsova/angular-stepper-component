@@ -1,9 +1,9 @@
-
 <div class="stepper-container" [ngClass]="{ 'vertical': isVertical }">
     <div class="steps">
         <div class="step" 
-             *ngFor="let step of steps; let i = index" 
+             *ngFor="let step of stepElements; let i = index" 
              [class.active]="i === currentStep"
+             [class.submitted]="step.isSubmitted"
              (click)="goToStep(i)"
         >
             <div class="step-label">{{ step.label }}</div>
@@ -14,22 +14,53 @@
     <div class="step-content-wrapper">
         <div class="step-content" *ngIf="currentStep === 0">
             <h2>Step 1</h2>
+
+            <div class="step-actions">
+                <div>
+                    <button type="button" (click)="onPrevious()" disabled>
+                        Back
+                    </button>
+                    <button type="button" (click)="onNext()">
+                        Next
+                    </button>
+                </div>
+                
+                <button type="button" (click)="onSubmit(currentStep)">Submit step</button>
+            </div>
         </div>
         <div class="step-content" *ngIf="currentStep === 1">
             <h2>Step 2</h2>
+
+            <div class="step-actions">
+                <div>
+                    <button type="button" (click)="onPrevious()">
+                        Back
+                    </button>
+                    <button type="button" (click)="onNext()">
+                        Next
+                    </button>
+                </div>
+                
+                <button type="button" (click)="onSubmit(currentStep)">Submit step</button>
+            </div>
         </div>
         <div class="step-content" *ngIf="currentStep === 2">
             <h2>Step 3</h2>
-        </div>
 
-        <div class="step-actions">
-            <button type="button" (click)="onPrevious()" [disabled]="currentStep === 0">
-                Back
-            </button>
-            <button type="button" (click)="onNext()" [disabled]="isLastStep()">
-                Next
-            </button>
-            <button type="button" (click)="onSubmit()" *ngIf="isLastStep()">Submit</button>
+            <p *ngIf="stepperFinished">Hoorey! Your form is submitted!</p>
+
+            <div class="step-actions">
+                <div>
+                    <button type="button" (click)="onPrevious()">
+                        Back
+                    </button>
+                    <button type="button" (click)="onNext()" disabled>
+                        Next
+                    </button>
+                </div>
+                
+                <button type="button" (click)="onSubmit(currentStep)">Submit</button>
+            </div>
         </div>
     </div>
 </div>

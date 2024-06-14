@@ -1,6 +1,8 @@
 @import '../../../styles/variables';
 
 .stepper-container {
+    overflow-x: hidden;
+    
     .steps {
         display: flex;
         flex-direction: row;
@@ -45,6 +47,16 @@
                 background-color: $bg-step;
             }
 
+            &.submitted:not(.active) {
+                &::before {
+                    content: "";
+                    background-image: url('../../../assets/images/check-icon.svg');
+                    background-position: center;
+                    border-color: transparent;
+                    box-shadow: 8px 0px 20px rgba(8, 8, 8, 0.45);
+                }
+            }
+
             &.active {
                 color: $white;
 
@@ -59,16 +71,6 @@
                 }
             }
 
-            &.finished {
-                &::before {
-                    content: "";
-                    background-image: url('../../../assets/images/check-icon.svg');
-                    background-position: center;
-                    border-color: transparent;
-                    box-shadow: 8px 0px 20px rgba(8, 8, 8, 0.45);
-                }
-            }
-
             .step-label {
                 margin-bottom: 20px;
                 line-height: 22px;
@@ -76,9 +78,12 @@
         }
     }
 
-    .step-content {
+    .step-content-wrapper {
         padding: 1.5rem;
         color: $white;
+    }
+
+    .step-content {
         animation: slide-in 600ms ease-in-out;
     }
 
@@ -86,7 +91,14 @@
         display: flex;
         flex-direction: row;
         gap: 1.5rem;
-        justify-content: flex-end;
+        justify-content: space-between;
+        margin-top: 4rem;
+
+        > div {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-start;
+        }
 
         button {
             padding: 0.5rem 1rem;
@@ -106,6 +118,61 @@
             }
         }
     }
+
+    &.vertical {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+
+        .steps {
+            display: grid;
+            grid-template-columns: 100px;
+            grid-template-rows: repeat(auto-fill, 130px);
+            align-items: flex-start;
+
+            .step {
+                align-items: center;
+                justify-content: left;
+                display: grid;
+                grid-template-rows: 130px;
+
+                &::before {
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: auto;
+                    margin-bottom: 0;
+                }
+
+                &::after {
+                    width: 4px;
+                    height: 100%;
+                    min-height: 130px;
+                    position: absolute;
+                    left: 9px;
+                    top: 0;
+                }
+
+                .step-label {
+                    margin-bottom: 0;
+                    margin-bottom: 0;
+                    text-align: left;
+                    margin-left: 30px;
+                }
+            }
+        }
+
+        .step-content-wrapper {
+
+            .step-content {
+                animation: slide-in-vertical 600ms ease-in-out;
+                animation-delay: 0.2s;
+            }
+
+            .step-actions {
+                padding: 1.5rem;
+                justify-content: flex-start;
+            }
+        }
+    }
 }
 
 @keyframes slide-in {
@@ -114,5 +181,14 @@
     }
     to {
         transform: translateX(0%);
+    }
+}
+
+@keyframes slide-in-vertical {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
     }
 }
