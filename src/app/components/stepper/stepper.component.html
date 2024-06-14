@@ -1,4 +1,4 @@
-<div class="stepper-container" [ngClass]="{ 'vertical': isVertical }">
+<div class="stepper-container" [ngClass]="{ 'vertical': isVertical }" style="--color: {{color}}">
     <div class="steps">
         <div class="step" 
              *ngFor="let step of stepElements; let i = index" 

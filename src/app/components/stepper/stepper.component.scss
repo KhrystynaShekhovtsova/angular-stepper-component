@@ -62,12 +62,12 @@
 
                 &::before {
                     color: $text-black;
-                    background-color: $emerald;
+                    background-color: var(--color);
                     border-color: transparent;
                 }
 
                 &::after {
-                    background-color: $emerald;
+                    background-color: var(--color);
                 }
             }
 
@@ -102,7 +102,8 @@
 
         button {
             padding: 0.5rem 1rem;
-            background-color: rgba($emerald, 0.6);
+            background-color: var(--color);
+            opacity: 0.8;
             transition: all 0.5s;
             cursor: pointer;
             border: 0;
@@ -110,7 +111,8 @@
             color: $white;
 
             &:hover {
-                background-color: rgba($emerald, 0.8);
+                background-color: var(--color);
+                opacity: 1;
             }
 
             &:disabled {
@@ -161,14 +163,15 @@
         }
 
         .step-content-wrapper {
+            margin-top: 0;
+            padding-top: 0;
 
             .step-content {
-                animation: slide-in-vertical 600ms ease-in-out;
-                animation-delay: 0.2s;
+                animation: slide-in-vertical 600ms ease-in;
             }
 
             .step-actions {
-                padding: 1.5rem;
+                padding: 1.5rem 0;
                 justify-content: flex-start;
             }
         }

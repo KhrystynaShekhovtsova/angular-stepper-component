@@ -15,10 +15,10 @@ interface StepItem extends Step {
 })
 
 export class StepperComponent implements OnInit {
-  @Input() color: string = '#22ECE9';
-  @Input() isVertical: boolean = true;
   @Input() steps: Step[] = [];
   @Input() currentStep: number = 0;
+  @Input() color?: string = '#22ECE9';
+  @Input() isVertical?: boolean = false;
 
   stepElements: StepItem[] = [];
 
@@ -31,39 +31,33 @@ export class StepperComponent implements OnInit {
     }));
   }
 
-  onNext() {
+  onNext(): void {
     if (this.currentStep < this.stepElements.length - 1) {
       this.currentStep++;
     }
   }
 
-  onPrevious() {
+  onPrevious(): void {
     if (this.currentStep > 0) {
       this.currentStep--;
     }
   }
 
-  goToStep(i: number) {
+  goToStep(i: number): void {
     this.currentStep = i;
   }
 
-  onSubmit(i: number) {
-    let index = i;
-    this.stepElements[index].isSubmitted = true;
-
-    if (index === this.stepElements.length - 1) {
-      const notSubmittedStep:number = this.stepElements.findIndex(step => !step.isSubmitted);
-
-      if (notSubmittedStep !== -1) {
-        index = notSubmittedStep;
-      } else {
-        return;
-      }
-    } else {
-      index++;
+  onSubmit(currentIndex: number): void {
+    // mark the current step as submitted
+    this.stepElements[currentIndex].isSubmitted = true;
+  
+    // find index of the next non-submitted step
+    const nextNonSubmittedIndex = this.stepElements.findIndex((step, index) => index > currentIndex && !step.isSubmitted);
+  
+    // in case all steps are submitted, return
+    if (nextNonSubmittedIndex !== -1) {
+      this.goToStep(nextNonSubmittedIndex);
     }
-
-    this.goToStep(index);
   }
 
   get stepperFinished(): boolean {
